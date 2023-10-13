@@ -1,0 +1,51 @@
+html {
+    font-size: 72px;
+}
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #000;
+}
+.container {
+    width: 10.8rem;
+    margin: 0 auto;
+    height: 100vh;
+}
+
+.flex {
+    display: flex;
+}
+.justifyCenter {
+    justify-content: center;
+}
+.alignCenter {
+    align-items: center;
+}
+.justifySpaceBetween {
+    justify-content: space-between;
+}
+.header {
+    margin-top: 0.26rem;
+    margin-bottom: 0.26rem;
+}
+.logo {
+    width: 2.1rem;
+    height: 0.8rem;
+}
+.downloadBtn{
+    width: 2.9rem;
+    height: 0.8rem;
+    background-color: #10FC76;
+    font-size: 0.34rem;
+    font-weight: 800;
+    border-radius: 0.8rem;
+}
+.downloadBtn img {
+    width: 0.36rem;
+    height: 0.36rem;
+    margin-right: 0.1rem;
+}
+.loading {
+    height: 14.4rem;
+    background-color: #635e5e;
+}

@@ -1,19 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
     <title>Spellai</title>
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>
-    <div class="container">
-        <div class="flex alignCenter justifySpaceBetween header">
-            <img src="./images/logo.png" alt="logo" class="logo">
-            <div class="downloadBtn flex alignCenter justifyCenter"><img src="./images/ic-download.png">Download</div>
-        </div>
+    <link
+      rel="stylesheet"
+      href="index.css"
+    />
+  </head>
+  <body>
+    <div
+      id="container"
+      class="container"
+    >
+      <div class="flex alignCenter justifySpaceBetween header">
+        <img
+          src="./images/logo.png"
+          alt="logo"
+          class="logo"
+        />
+        <div class="downloadBtn flex alignCenter justifyCenter"><img src="./images/ic-download.png" />Download</div>
+      </div>
 
-        <div class="loading"></div>
+      <div class="loading"></div>
+      <div class="prompt-list-before">A pirate standing on the deck</div>
+      <!-- 横向可滚动列表 START -->
+      <div class="prompt-list-container">
+        <ul class="prompt-list">
+          <li><img src="./images/img-real.png" alt=""><div class="prompt-category">Style</div><div class="prompt-name">Realistic</div></li>
+          <li><img src="./images/img-real.png" alt=""><div class="prompt-category">Jesus</div><div class="prompt-name">Realistic</div></li>
+          <li><img src="./images/img-real.png" alt=""><div class="prompt-category">Fairyland</div><div class="prompt-name">Realistic</div></li>
+          <li><img src="./images/img-real.png" alt=""><div class="prompt-category">Sitting</div><div class="prompt-name">Realistic</div></li>
+          <li><img src="./images/img-real.png" alt=""><div class="prompt-category">Traditional</div><div class="prompt-name">Realistic</div></li>
+          <!-- 添加更多项目 -->
+        </ul>
+      </div>
+      <!-- 横向可滚动列表 END -->
     </div>
-</body>
+
+    <div class="waterFallBefore">Trending Now</div>
+    <!-- 瀑布流列表 START -->
+    <div
+      id="waterFallContainer"
+      class="waterFallContainer"
+    ></div>
+    <!-- 瀑布流列表 END -->
+
+    <!-- 创建按钮 START -->
+    <div class="create-btn">
+        <div>Create Your Art</div>
+        <img src="./images/arrow.png" alt="">
+        <div>TOTALLY FREE</div>
+    </div>
+    <!-- 创建按钮 END -->
+
+    <!-- VIEW MORE START-->
+    <div class="view-more-btn">View More</div>
+    <!-- VIEW MORE END -->
+
+    <script>
+      var waterFall = {
+        container: document.getElementById("waterFallContainer"),
+        columnNumber: 1,
+        columnWidth: 210,
+        rootImage: "http://cued.xunlei.com/demos/publ/img/",
+        indexImage: 0,
+        total: 20,
+        scrollTop: document.documentElement.scrollTop || document.body.scrollTop,
+        detectLeft: 0,
+
+        loadFinish: false,
+
+        // 页面加载初始创建
+        create: function () {
+          var htmlEle = document.documentElement
+          var computedStyle = window.getComputedStyle(htmlEle)
+          var fontSize = parseFloat(computedStyle.getPropertyValue("font-size").replace("px", ""))
+          console.log('this.container.clientWidth',this.container.clientWidth)
+        //   this.columnWidth = parseFloat((fontSize * 5.1).toFixed(1))
+        this.columnWidth = (this.container.clientWidth - 60)/2
+
+          //   this.columnNumber = Math.floor(this.container.clientWidth / this.columnWidth)
+          this.columnNumber = 2
+
+          var start = 0,
+            htmlColumn = "",
+            self = this
+          for (start; start < this.columnNumber; start += 1) {
+            htmlColumn =
+              htmlColumn +
+              '<span id="waterFallColumn_' +
+              start +
+              '" class="column" style="width:' +
+              this.columnWidth +
+              'px;">' +
+              (function () {
+                var html = "",
+                  i = 0
+                for (i = 0; i < 1; i += 1) {
+                  self.indexImage = start + self.columnNumber * i
+                  html += self.buildItem(start)
+                }
+                return html
+              })() +
+              "</span> "
+          }
+          htmlColumn += '<span id="waterFallDetect" class="column" style="width:' + this.columnWidth + 'px;"></span>'
+
+          this.container.innerHTML += htmlColumn
+
+          this.detectLeft = document.getElementById("waterFallDetect").offsetLeft
+          return this
+        },
+        buildItem: function (i) {
+          var index = (i % 3) + 1
+          var name = this.getIndex()
+          return `<a href="###" class="pic_a"><img src="./images/${index}.png" />
+            <div class="userAvatar">
+                <img src="./images/1.png" alt="avatar img">
+                <span>Jacob222</span>
+            </div>
+            <div class="description">#3DRender #Lego #Vie...</div>
+            </a>`
+        },
+
+        // 返回固定格式的图片名
+        getIndex: function () {
+          var index = this.indexImage
+          if (index < 10) {
+            index = "00" + index
+          } else if (index < 100) {
+            index = "0" + index
+          }
+          return index
+        },
+
+        // 是否滚动载入的检测
+        appendDetect: function () {
+          var start = 0
+          for (start; start < this.columnNumber; start++) {
+            var eleColumn = document.getElementById("waterFallColumn_" + start)
+            if (eleColumn && !this.loadFinish) {
+              //   console.log("----------------------------------")
+              //   console.log("eleColumn offsetTop", eleColumn.offsetTop)
+              //   console.log("eleColumn Height", eleColumn.clientHeight)
+              //   console.log("this.scrollTop", this.scrollTop)
+              //   console.log("window.innerHeight", window.innerHeight, document.documentElement.clientHeight)
+              if (
+                eleColumn.offsetTop + eleColumn.clientHeight <
+                this.scrollTop + (window.innerHeight || document.documentElement.clientHeight)
+              ) {
+                // console.log(
+                //   "判断条件",
+                //   eleColumn.offsetTop + eleColumn.clientHeight,
+                //   this.scrollTop + (window.innerHeight || document.documentElement.clientHeight),
+                // )
+                // console.log("添加图片")
+                // console.log("==================================")
+                this.append(eleColumn)
+              }
+            }
+          }
+
+          return this
+        },
+
+        // 滚动载入
+        append: function (column) {
+          this.indexImage += 1
+          column.innerHTML += this.buildItem(this.indexImage % 2)
+
+          if (this.indexImage >= this.total) {
+            console.log("图片加载光光了！")
+            this.loadFinish = true
+          }
+
+          return this
+        },
+        refresh: function () {
+          console.log("refresh")
+          var arrHtml = [],
+            arrTemp = [],
+            htmlAll = "",
+            start = 0,
+            maxLength = 0
+          for (start; start < this.columnNumber; start += 1) {
+            var arrColumn = document
+              .getElementById("waterFallColumn_" + start)
+              .innerHTML.match(/<a(?:.|\n|\r|\s)*?a>/gi)
+            if (arrColumn) {
+              maxLength = Math.max(maxLength, arrColumn.length)
+              // arrTemp是一个二维数组
+              arrTemp.push(arrColumn)
+            }
+          }
+
+          // 需要重新排序
+          var lengthStart, arrStart
+          for (lengthStart = 0; lengthStart < maxLength; lengthStart++) {
+            for (arrStart = 0; arrStart < this.columnNumber; arrStart++) {
+              if (arrTemp[arrStart][lengthStart]) {
+                arrHtml.push(arrTemp[arrStart][lengthStart])
+              }
+            }
+          }
+
+          if (arrHtml && arrHtml.length !== 0) {
+            // 新栏个数
+            this.columnNumber = Math.floor(document.body.clientWidth / this.columnWidth)
+
+            // 计算每列的行数
+            // 向下取整
+            var line = Math.floor(arrHtml.length / this.columnNumber)
+
+            // 重新组装HTML
+            var newStart = 0,
+              htmlColumn = "",
+              self = this
+            for (newStart; newStart < this.columnNumber; newStart += 1) {
+              htmlColumn =
+                htmlColumn +
+                '<span id="waterFallColumn_' +
+                newStart +
+                '" class="column" style="width:' +
+                this.columnWidth +
+                'px;">' +
+                (function () {
+                  var html = "",
+                    i = 0
+                  for (i = 0; i < line; i += 1) {
+                    html += arrHtml[newStart + self.columnNumber * i]
+                  }
+                  // 是否补足余数
+                  html = html + (arrHtml[newStart + self.columnNumber * line] || "")
+
+                  return html
+                })() +
+                "</span> "
+            }
+            htmlColumn += '<span id="waterFallDetect" class="column" style="width:' + this.columnWidth + 'px;"></span>'
+
+            this.container.innerHTML = htmlColumn
+
+            this.detectLeft = document.getElementById("waterFallDetect").offsetLeft
+
+            // 检测
+            this.appendDetect()
+          }
+          return this
+        },
+
+        // 滚动加载
+        scroll: function () {
+          var self = this
+          window.onscroll = function () {
+            // 为提高性能，滚动前后距离大于100像素再处理
+            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+            // console.log('当前滚动位置',scrollTop)
+            // console.log('上次滚动位置',self.scrollTop)
+            // console.log('滚动距离',Math.abs(scrollTop - self.scrollTop))
+            if (!this.loadFinish && Math.abs(scrollTop - self.scrollTop) > 100) {
+              self.scrollTop = scrollTop
+              self.appendDetect()
+            }
+          }
+          return this
+        },
+
+        // 浏览器窗口大小变换
+        resize: function () {
+          console.log("监听窗口大小变化")
+          var self = this
+          window.onresize = function () {
+            var eleDetect = document.getElementById("waterFallDetect"),
+              detectLeft = eleDetect && eleDetect.offsetLeft
+            if (detectLeft && Math.abs(detectLeft - self.detectLeft) > 50) {
+              // 检测标签偏移异常，认为布局要改变
+              self.refresh()
+            }
+          }
+          return this
+        },
+        init: function () {
+          if (this.container) {
+            this.create().scroll()
+          }
+        },
+      }
+      waterFall.init()
+    </script>
+  </body>
 </html>

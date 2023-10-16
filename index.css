@@ -163,48 +163,48 @@ body {
   margin-left: 0.1rem;
 }
 
-.create-btn{
-    margin: 0 0.2rem;
-    height: 1.8rem;
-    background: linear-gradient(to right, #10FC76, #F6FC11);
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-radius: 0.3rem;
-    margin-bottom: 0.4rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.create-btn {
+  margin: 0 auto;
+  padding: 10px 0;
+  background: linear-gradient(to right, #10fc76, #f6fc11);
+  position: fixed;
+  bottom: 20px;
+  width: 10rem;
+  border-radius: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  transform: translate(-50%, 0%);
 }
-.create-btn div:first-child{
-    color: black;
-    font-weight: 800;
-    font-size: 0.5rem;
+.create-btn div:first-child {
+  color: black;
+  font-weight: 800;
+  font-size: 0.5rem;
 }
-.create-btn div:last-child{
-    color: black;
-    font-weight: 600;
-    font-size: 0.3rem;
+.create-btn div:last-child {
+  color: black;
+  font-weight: 600;
+  font-size: 0.3rem;
 }
 .create-btn img {
-    position: absolute;
-    right: 0.7rem;
-    width: 0.5rem;
-    height: 0.5rem;
+  position: absolute;
+  right: 25px;
+  width: 0.5rem;
+  height: 0.5rem;
 }
 .view-more-btn {
-    width: 3.6rem;
-    height: 1.2rem;
-    margin: 0 auto;
-    box-sizing: border-box;
-    border: 0.03rem solid #10FC76;
-    border-radius: 1.2rem;
-    color: #10FC76;
-    font-size: 0.4rem;
-    font-weight: 700;
-    margin-bottom: 200px;
-    text-align: center;
-    line-height: 1.2rem;
+  width: 3.6rem;
+  height: 1.2rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+  border: 0.03rem solid #10fc76;
+  border-radius: 1.2rem;
+  color: #10fc76;
+  font-size: 0.4rem;
+  font-weight: 700;
+  margin-bottom: 200px;
+  text-align: center;
+  line-height: 1.2rem;
 }

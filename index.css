@@ -1,5 +1,21 @@
 html {
-  font-size: 72px;
+  font-size: 50px;
+}
+@media (min-width: 640px) {
+  html {
+    font-size: 60px;
+  }
+}
+@media (min-width: 768px) {
+    html {
+      font-size: 72px;
+    }
+}
+@media (min-width: 1024px) {
+}
+@media (min-width: 1280px) {
+}
+@media (min-width: 1536px) {
 }
 body {
   padding: 0;
@@ -46,10 +62,17 @@ body {
   height: 0.36rem;
   margin-right: 0.1rem;
 }
-.loading {
+.banner-container {
   width: 100%;
-  background-color: #635e5e;
+  background-color: black;
   aspect-ratio: 1080/1440;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.banner-container img {
+    width: 100%;
+    object-fit: cover;
 }
 .prompt-list-before {
   font-weight: 700;
@@ -172,27 +195,29 @@ body {
   width: 10rem;
   border-radius: 0.3rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   left: 50%;
   transform: translate(-50%, 0%);
 }
-.create-btn div:first-child {
+.create-btn-text {
+    text-align: center;
+}
+.create-btn-text div:first-child {
   color: black;
   font-weight: 800;
   font-size: 0.5rem;
 }
-.create-btn div:last-child {
+.create-btn-text div:last-child {
   color: black;
   font-weight: 600;
   font-size: 0.3rem;
 }
 .create-btn img {
-  position: absolute;
-  right: 25px;
   width: 0.5rem;
   height: 0.5rem;
+  position: absolute;
+  right: 0.3rem;
 }
 .view-more-btn {
   width: 3.6rem;
@@ -208,3 +233,78 @@ body {
   text-align: center;
   line-height: 1.2rem;
 }
+
+/* 圆环loading START */
+.loading{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    padding: 10px;
+}
+.loading .loading-content{
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    position: relative;
+    z-index: 9;
+    border-radius: 50%;
+}
+.loading .loading-mask{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    animation: rotateAnimate 2s linear infinite;
+    -moz-animation: rotateAnimate 2s linear infinite;	/* Firefox */
+    -webkit-animation: rotateAnimate 2s linear infinite;	/* Safari 和 Chrome */
+    -o-animation: rotateAnimate 2s linear infinite;	/* Opera */
+}
+.loading .loading-mask::before{
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 5px);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #10FC76;
+}
+.loading .loading-mask::after{
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 50%;
+    height: 60%;
+    background-image: linear-gradient(45deg, #10FC76, #000);
+}
+@keyframes rotateAnimate
+{
+    from {transform: rotate(0);-moz-transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);}
+    to {transform: rotate(360deg);-moz-transform: rotate(360deg);-webkit-transform: rotate(360deg);-o-transform: rotate(360deg);}
+}
+
+@-moz-keyframes rotateAnimate /* Firefox */
+{
+    from {transform: rotate(0);-moz-transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);}
+    to {transform: rotate(360deg);-moz-transform: rotate(360deg);-webkit-transform: rotate(360deg);-o-transform: rotate(360deg);}
+}
+
+@-webkit-keyframes rotateAnimate /* Safari 和 Chrome */
+{
+    from {transform: rotate(0);-moz-transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);}
+    to {transform: rotate(360deg);-moz-transform: rotate(360deg);-webkit-transform: rotate(360deg);-o-transform: rotate(360deg);}
+}
+
+@-o-keyframes rotateAnimate /* Opera */
+{
+    from {transform: rotate(0);-moz-transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);}
+    to {transform: rotate(360deg);-moz-transform: rotate(360deg);-webkit-transform: rotate(360deg);-o-transform: rotate(360deg);}
+}
+/* 圆环 loading END */

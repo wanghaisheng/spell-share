@@ -2,32 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Spellai</title>
-    <link
-      rel="stylesheet"
-      href="index.css"
-    />
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <div
-      id="container"
-      class="container"
-    >
+    <div id="bigSpinner" class="big-spinner">
+      <div class="loading">
+        <div class="loading-mask"></div>
+        <div class="loading-content"></div>
+      </div>
+    </div>
+    <div id="container" class="container">
       <div class="flex alignCenter justifySpaceBetween header">
-        <img
-          src="./images/logo.png"
-          alt="logo"
-          class="logo"
-        />
-        <div class="downloadBtn flex alignCenter justifyCenter">
-          <img
-            src="./images/ic-download.png"
-            alt=""
-          />Download
+        <img src="./images/logo.png" alt="logo" class="logo" />
+        <div id="downloadBtn" class="downloadBtn flex alignCenter justifyCenter">
+          <img src="./images/ic-download.png" alt="" />Download
         </div>
       </div>
 
@@ -36,86 +26,53 @@
           <div class="loading-mask"></div>
           <div class="loading-content"></div>
         </div> -->
-        <img
-          src="images/feed.png"
-          alt="banner"
-        />
+        <img class="banner" src="" alt="banner" />
+        <div class="bottom-info flex justifySpaceBetween alignCenter">
+          <div class="user-info flex justifyCenter alignCenter">
+            <img src="" alt="" />
+            <span></span>
+          </div>
+          <div class="like flex justifyCenter alignCenter">
+            <img src="images/ic-like.png" alt="ic-like" />
+            <span>25.6k</span>
+          </div>
+        </div>
       </div>
       <div class="prompt-list-before">A pirate standing on the deck</div>
       <!-- 横向可滚动列表 START -->
       <div class="prompt-list-container">
-        <ul class="prompt-list">
-          <li>
-            <img
-              src="./images/img-real.png"
-              alt=""
-            />
-            <div class="prompt-category">Style</div>
-            <div class="prompt-name">Realistic</div>
-          </li>
-          <li>
-            <img
-              src="./images/img-real.png"
-              alt=""
-            />
-            <div class="prompt-category">Jesus</div>
-            <div class="prompt-name">Realistic</div>
-          </li>
-          <li>
-            <img
-              src="./images/img-real.png"
-              alt=""
-            />
-            <div class="prompt-category">Fairyland</div>
-            <div class="prompt-name">Realistic</div>
-          </li>
-          <li>
-            <img
-              src="./images/img-real.png"
-              alt=""
-            />
-            <div class="prompt-category">Sitting</div>
-            <div class="prompt-name">Realistic</div>
-          </li>
-          <li>
-            <img
-              src="./images/img-real.png"
-              alt=""
-            />
-            <div class="prompt-category">Traditional</div>
-            <div class="prompt-name">Realistic</div>
-          </li>
-          <!-- 添加更多项目 -->
-        </ul>
+        <ul class="prompt-list"></ul>
       </div>
       <!-- 横向可滚动列表 END -->
       <div class="waterFallBefore">Trending Now</div>
       <!-- 瀑布流列表 START -->
-      <div
-        id="waterFallContainer"
-        class="waterFallContainer"
-      ></div>
+      <div id="waterFallContainer" class="waterFallContainer"></div>
       <!-- 瀑布流列表 END -->
 
+      <div id="smallSpinner" class="small-spinner">
+        <div class="loading">
+          <div class="loading-mask"></div>
+          <div class="loading-content"></div>
+        </div>
+      </div>
       <!-- VIEW MORE START-->
-      <div class="view-more-btn">View More</div>
+      <div id="viewMoreBtn" class="view-more-btn">View More</div>
       <!-- VIEW MORE END -->
+
+      <!-- 创建按钮 START -->
+      <div id="createBtn" class="create-btn">
+        <div class="create-btn-text">
+          <div>Create Your Art</div>
+          <div>TOTALLY FREE</div>
+        </div>
+        <img src="./images/arrow.png" alt="" />
+      </div>
+      <!-- 创建按钮 END -->
     </div>
 
-    <!-- 创建按钮 START -->
-    <div class="create-btn">
-      <div class="create-btn-text">
-        <div>Create Your Art</div>
-        <div>TOTALLY FREE</div>
-      </div>
-      <img
-        src="./images/arrow.png"
-        alt=""
-      />
-    </div>
-    <!-- 创建按钮 END -->
     <script src="models.js" type="module"></script>
     <script src="water_fall.js" type="module"></script>
+    <script src="api.js" type="module"></script>
     <script src="index.js" type="module"></script>
   </body>
 </html>

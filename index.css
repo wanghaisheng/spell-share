@@ -7,9 +7,9 @@ html {
   }
 }
 @media (min-width: 768px) {
-    html {
-      font-size: 72px;
-    }
+  html {
+    font-size: 72px;
+  }
 }
 @media (min-width: 1024px) {
 }
@@ -25,6 +25,7 @@ body {
 .container {
   max-width: 10.8rem;
   margin: 0 auto;
+  display: none;
 }
 
 .flex {
@@ -69,16 +70,21 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 .banner-container img {
-    width: 100%;
-    object-fit: cover;
+  width: 100%;
+  object-fit: cover;
 }
 .prompt-list-before {
   font-weight: 700;
-  font-size: 0.46rem;
+  font-size: 0.4rem;
   color: white;
-  padding: 0.4rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* 限制文本最多显示3行 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0.4rem 0.4rem;
 }
 /* 使用 CSS 来控制列表容器的样式 */
 .prompt-list-container {
@@ -109,7 +115,6 @@ body {
 .prompt-category {
   position: absolute;
   top: 0;
-  background-color: #0038ffbf;
   color: white;
   font-weight: 700;
   font-size: 0.26rem;
@@ -117,6 +122,8 @@ body {
   text-align: center;
   border-top-left-radius: 0.2rem;
   border-top-right-radius: 0.2rem;
+  height: 0.45rem;
+  line-height: 0.45rem;
 }
 .prompt-list li img {
   width: 100%;
@@ -144,6 +151,8 @@ body {
   margin: 0 auto 5px;
   border: 0;
   width: 100%;
+  position: relative;
+  border-radius: 0.2rem;
 }
 .pic_a strong {
   color: #333;
@@ -184,6 +193,9 @@ body {
   font-weight: 600;
   font-size: 0.3rem;
   margin-left: 0.1rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .create-btn {
@@ -199,9 +211,10 @@ body {
   justify-content: center;
   left: 50%;
   transform: translate(-50%, 0%);
+  z-index: 999;
 }
 .create-btn-text {
-    text-align: center;
+  text-align: center;
 }
 .create-btn-text div:first-child {
   color: black;
@@ -229,82 +242,178 @@ body {
   color: #10fc76;
   font-size: 0.4rem;
   font-weight: 700;
-  margin-bottom: 200px;
+  margin-bottom: 2.4rem;
   text-align: center;
   line-height: 1.2rem;
 }
 
 /* 圆环loading START */
-.loading{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    position: relative;
-    overflow: hidden;
-    padding: 10px;
+.loading {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
 }
-.loading .loading-content{
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    position: relative;
-    z-index: 9;
-    border-radius: 50%;
+.loading .loading-content {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  position: relative;
+  z-index: 9;
+  border-radius: 50%;
 }
-.loading .loading-mask{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    animation: rotateAnimate 2s linear infinite;
-    -moz-animation: rotateAnimate 2s linear infinite;	/* Firefox */
-    -webkit-animation: rotateAnimate 2s linear infinite;	/* Safari 和 Chrome */
-    -o-animation: rotateAnimate 2s linear infinite;	/* Opera */
+.loading .loading-mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  animation: rotateAnimate 2s linear infinite;
+  -moz-animation: rotateAnimate 2s linear infinite; /* Firefox */
+  -webkit-animation: rotateAnimate 2s linear infinite; /* Safari 和 Chrome */
+  -o-animation: rotateAnimate 2s linear infinite; /* Opera */
 }
-.loading .loading-mask::before{
-    content: "";
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: calc(50% - 5px);
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #10FC76;
+.loading .loading-mask::before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 5px);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #10fc76;
 }
-.loading .loading-mask::after{
-    content: "";
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 50%;
-    height: 60%;
-    background-image: linear-gradient(45deg, #10FC76, #000);
+.loading .loading-mask::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 50%;
+  height: 60%;
+  background-image: linear-gradient(45deg, #10fc76, #000);
 }
-@keyframes rotateAnimate
-{
-    from {transform: rotate(0);-moz-transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);}
-    to {transform: rotate(360deg);-moz-transform: rotate(360deg);-webkit-transform: rotate(360deg);-o-transform: rotate(360deg);}
-}
-
-@-moz-keyframes rotateAnimate /* Firefox */
-{
-    from {transform: rotate(0);-moz-transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);}
-    to {transform: rotate(360deg);-moz-transform: rotate(360deg);-webkit-transform: rotate(360deg);-o-transform: rotate(360deg);}
-}
-
-@-webkit-keyframes rotateAnimate /* Safari 和 Chrome */
-{
-    from {transform: rotate(0);-moz-transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);}
-    to {transform: rotate(360deg);-moz-transform: rotate(360deg);-webkit-transform: rotate(360deg);-o-transform: rotate(360deg);}
+@keyframes rotateAnimate {
+  from {
+    transform: rotate(0);
+    -moz-transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -o-transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
 }
 
-@-o-keyframes rotateAnimate /* Opera */
-{
-    from {transform: rotate(0);-moz-transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);}
-    to {transform: rotate(360deg);-moz-transform: rotate(360deg);-webkit-transform: rotate(360deg);-o-transform: rotate(360deg);}
+@-moz-keyframes rotateAnimate /* Firefox */ {
+  from {
+    transform: rotate(0);
+    -moz-transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -o-transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes rotateAnimate /* Safari 和 Chrome */ {
+  from {
+    transform: rotate(0);
+    -moz-transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -o-transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes rotateAnimate /* Opera */ {
+  from {
+    transform: rotate(0);
+    -moz-transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -o-transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
 }
 /* 圆环 loading END */
+
+/* 设置圆环的大小 START */
+.small-spinner {
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  visibility: hidden;
+}
+.small-spinner .loading {
+  /* 设置环的厚度 */
+  padding: 8px;
+}
+.small-spinner .loading .loading-mask::before {
+  /* 设置环的厚度 */
+  width: 8px;
+  height: 8px;
+}
+/* 设置圆环的大小 END */
+
+/* 大加载动画 START */
+.big-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.big-spinner .loading {
+    width: 3rem;
+  /* 设置环的厚度 */
+  padding: 12px;
+}
+.big-spinner .loading .loading-mask::before {
+  /* 设置环的厚度 */
+  width: 12px;
+  height: 12px;
+}
+/* 大加载动画 END */
+
+.bottom-info {
+    padding: 0 0.4rem;
+    position: absolute;
+    bottom: 0.3rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+.user-info img {
+    width: 0.48rem;
+}
+.like, .user-info {
+    color: white;
+    font-size: 0.38rem;
+    font-weight: 700;
+}
+.like img{
+    width: 0.6rem;
+    margin-right: 0.07rem;
+}

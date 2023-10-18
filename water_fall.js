@@ -1,7 +1,10 @@
+import api from "./api.js"
 import { FeedInfo, FeedListData } from "./models.js"
 
 export default {
   container: document.getElementById("waterFallContainer"),
+  viewMoreBtn: document.getElementById("viewMoreBtn"),
+  spinner: document.getElementById("smallSpinner"),
   columnNumber: 1,
   columnWidth: 210,
   gap: 15,
@@ -10,27 +13,26 @@ export default {
   scrollTop: document.documentElement.scrollTop || document.body.scrollTop,
   detectLeft: 0,
   loadFinish: false,
-  /** 
+  /**
+   *  目前使用一次性加载所有feed 的方式，可以不需要这个变量
    * @type {FeedInfo[]}
    */
   feedList: [],
+  pageNum: 1,
+  pageSize: 10,
 
-  /**
-   * WaterFall 初始化: 创建 html 代码, 监听滚动事件 s
-   * @param {FeedListData} feedListData - feed 列表数据
-   */
-  init: function (feedListData) {
-    this.total = feedListData.total
-    this.feedList = feedListData.list
-    if (this.container) {
-      this.create(feedListData.list).scroll()
-    }
+  init: async function () {
+    let data = await api.queryFeedList(this.pageNum, this.pageSize)
+    console.log(data)
+    this.total = data.total
+    this.feedList = data.list
+    // 监听 viewMore 按钮点击事件
+    this.viewMoreBtn.addEventListener("click", this.onLoad.bind(this))
+    // if (this.container) {
+    //   this.create(data.list).scroll()
+    // }
   },
-  /**
-   * 页面加载初始创建
-   * @param {FeedInfo[]} feedList - feed 列表数据
-   */
-  create: function (feedList) {
+  create: function () {
     this.columnWidth = (this.container.clientWidth - this.gap * 3) / 2
 
     //   this.columnNumber = Math.floor(this.container.clientWidth / this.columnWidth)
@@ -45,9 +47,10 @@ export default {
       }">${(function () {
         var html = "",
           i = 0
-        for (i = 0; i < 1; i += 1) {
+        for (i = 0; i < self.feedList.length / 2; i += 1) {
           self.indexImage = start + self.columnNumber * i
-          html += self.buildItem(start)
+          let feed = self.feedList[self.indexImage]
+          html += self.buildItem(feed)
         }
         return html
       })()}</span>`
@@ -59,14 +62,22 @@ export default {
     this.detectLeft = document.getElementById("waterFallDetect").offsetLeft
     return this
   },
-  buildItem: function (i) {
-    var index = (i % 3) + 1
-    return `<a href="###" class="pic_a"><img src="./images/${index}.png" />
+  /**
+   * 构建列表项 - Feed
+   * @param {FeedInfo} feed - feed 数据
+   * @returns  html 字符串
+   */
+  buildItem: function (feed) {
+    let promptText = feed.customPrompt
+      .split(",")
+      .map((item) => `#${item}`)
+      .join(" ")
+    return `<a href="###" class="pic_a"><img src="${feed.banner}" />
       <div class="userAvatar">
-          <img src="./images/1.png" alt="avatar img">
-          <span>Jacob222</span>
+          <img src="${feed.userIcon}" alt="avatar">
+          <span>${feed.userName}</span>
       </div>
-      <div class="description">#3DRender #Lego #Vie...</div>
+      <div class="description">${promptText}</div>
       </a>`
   },
 
@@ -85,13 +96,13 @@ export default {
           eleColumn.offsetTop + eleColumn.clientHeight <
           this.scrollTop + (window.innerHeight || document.documentElement.clientHeight)
         ) {
-          // console.log(
-          //   "判断条件",
-          //   eleColumn.offsetTop + eleColumn.clientHeight,
-          //   this.scrollTop + (window.innerHeight || document.documentElement.clientHeight),
-          // )
-          // console.log("添加图片")
-          // console.log("==================================")
+          //   console.log(
+          //     "判断条件",
+          //     eleColumn.offsetTop + eleColumn.clientHeight,
+          //     this.scrollTop + (window.innerHeight || document.documentElement.clientHeight),
+          //   )
+          //   console.log("添加图片")
+          //   console.log("==================================")
           this.append(eleColumn)
         }
       }
@@ -102,10 +113,11 @@ export default {
 
   // 滚动载入
   append: function (column) {
+    if (this.loadFinish) return
     this.indexImage += 1
-    column.innerHTML += this.buildItem(this.indexImage % 2)
+    column.innerHTML += this.buildItem(this.feedList[this.indexImage])
 
-    if (this.indexImage >= this.feedList.length-1) {
+    if (this.indexImage >= this.feedList.length - 1) {
       console.log("图片加载光光了！")
       this.loadFinish = true
     }
@@ -119,10 +131,10 @@ export default {
     window.onscroll = function () {
       // 为提高性能，滚动前后距离大于100像素再处理
       var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-      // console.log('当前滚动位置',scrollTop)
-      // console.log('上次滚动位置',self.scrollTop)
-      // console.log('滚动距离',Math.abs(scrollTop - self.scrollTop))
-      if (!this.loadFinish && Math.abs(scrollTop - self.scrollTop) > 100) {
+      //   console.log('当前滚动位置',scrollTop)
+      //   console.log('上次滚动位置',self.scrollTop)
+      //   console.log('滚动距离',Math.abs(scrollTop - self.scrollTop))
+      if (!self.loadFinish && Math.abs(scrollTop - self.scrollTop) > 100) {
         self.scrollTop = scrollTop
         self.appendDetect()
       }
@@ -141,14 +153,99 @@ export default {
     //       self.refresh();
     //     }
     //   };
+    let detectEle = document.getElementById("waterFallDetect")
+    if (!detectEle) return
     this.columnWidth = (this.container.clientWidth - this.gap * 3) / 2
     for (let i = 0; i < this.columnNumber; i++) {
       let columnEle = document.getElementById(`waterFallColumn_${i}`)
+      if (!columnEle) continue
       columnEle.style.width = this.columnWidth + "px"
     }
-    let detectEle = document.getElementById("waterFallDetect")
     detectEle.style.width = this.columnWidth + "px"
 
     return this
+  },
+  /** 加载更多 */
+  onLoad: async function () {
+    if (this.feedList.length >= this.total) return
+    this.viewMoreBtn.style.visibility = "hidden"
+    this.spinner.style.visibility = "visible"
+    this.pageNum++
+    let data = await api.queryFeedList(this.pageNum, this.pageSize)
+    // this.spinner.style.visibility = "hidden"
+    // if (this.feedList.length < this.total) {
+    //   this.viewMoreBtn.style.visibility = "visible"
+    // }
+    // this.feedList = this.feedList.concat(data.list)
+    // console.log("onLoad", this.feedList)
+    // this.loadFinish = false
+    // this.scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+    // this.appendDetect()
+
+    /** 一次性加载所有 feed START */
+    let imageList = data.list.map((item) => item.banner)
+    this.loadImageDimensions(imageList)
+      .then((result) => {
+        // console.log("所有图片加载完成", result[0].outerHTML)
+        var column0 = document.getElementById("waterFallColumn_0")
+        var column1 = document.getElementById("waterFallColumn_1")
+        let i = 0
+        while (i < result.length) {
+          let promptText = data.list[i].customPrompt
+            .split(",")
+            .map((item) => `#${item}`)
+            .join(" ")
+          let html = `<a href="###" class="pic_a">${result[i].outerHTML}
+            <div class="userAvatar">
+                <img src="${data.list[i].userIcon}" alt="avatar">
+                <span>${data.list[i].userName}</span>
+            </div>
+            <div class="description">${promptText}</div>
+            </a>`
+          if (column0.clientHeight < column1.clientHeight) {
+            column0.innerHTML += html
+          } else {
+            column1.innerHTML += html
+          }
+          i++
+        }
+        // 隐藏 spinner，显示 view more
+        this.spinner.style.visibility = "hidden"
+        if (this.feedList.length < this.total) {
+          this.viewMoreBtn.style.visibility = "visible"
+        }
+        // console.log("onLoad", this.feedList)
+      })
+      .catch((error) => {
+        console.error("出错了", error)
+      })
+    /** 一次性加载所有 feed END */
+  },
+  /**
+   * 加载图片
+   * @param {string[]} images - 图片 url
+   * @returns {HTMLImageElement[]} 返回 image element
+   */
+  loadImageDimensions: async function (images) {
+    /**
+     * @type {HTMLImageElement[]}
+     */
+    const dimensions = []
+
+    await new Promise((resolve) => {
+      for (const src of images) {
+        const img = new Image()
+        img.src = src
+        img.onload = function () {
+          dimensions.push(img)
+          if (dimensions.length === images.length) {
+            resolve()
+          }
+        }
+      }
+    })
+
+    // 返回所有图片的信息
+    return dimensions
   },
 }

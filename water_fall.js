@@ -26,11 +26,6 @@ export default {
     console.log(data)
     this.total = data.total
     this.feedList = data.list
-    // 监听 viewMore 按钮点击事件
-    this.viewMoreBtn.addEventListener("click", this.onLoad.bind(this))
-    // if (this.container) {
-    //   this.create(data.list).scroll()
-    // }
   },
   create: function () {
     this.columnWidth = (this.container.clientWidth - this.gap * 3) / 2
@@ -42,24 +37,24 @@ export default {
       htmlColumn = "",
       self = this
     for (start; start < this.columnNumber; start += 1) {
-      htmlColumn += `<span id="waterFallColumn_${start}" class="column" style="width:${this.columnWidth}px;${
-        start === 0 ? `margin-right: ${this.gap * 0.8}px` : ""
-      }">${(function () {
+      htmlColumn += `<span id="waterFallColumn_${start}" class="column" style="width:${
+        this.columnWidth
+      }px;">${(function () {
         var html = "",
           i = 0
         for (i = 0; i < self.feedList.length / 2; i += 1) {
           self.indexImage = start + self.columnNumber * i
           let feed = self.feedList[self.indexImage]
-          html += self.buildItem(feed)
+          html += self.buildItem(feed, self.openUrl)
         }
         return html
       })()}</span>`
     }
-    htmlColumn += `<span id="waterFallDetect" class="column" style="width:${this.columnWidth}px;"></span>`
+    // htmlColumn += `<span id="waterFallDetect" class="column" style="width:${this.columnWidth}px;"></span>`
 
     this.container.innerHTML += htmlColumn
 
-    this.detectLeft = document.getElementById("waterFallDetect").offsetLeft
+    // this.detectLeft = document.getElementById("waterFallDetect").offsetLeft
     return this
   },
   /**
@@ -68,11 +63,15 @@ export default {
    * @returns  html 字符串
    */
   buildItem: function (feed) {
+    let url = "https://app.adjust.com/15invrt2?deep_link=spellai:///fusion/" + feed.feedId
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        url += "&deeplink_js=1"
+    }
     let promptText = feed.customPrompt
       .split(",")
       .map((item) => `#${item}`)
       .join(" ")
-    return `<a href="###" class="pic_a"><img src="${feed.banner}" />
+    return `<a href="${url}" target="_blank" class="pic_a"><img src="${feed.banner}" />
       <div class="userAvatar">
           <img src="${feed.userIcon}" alt="avatar">
           <span>${feed.userName}</span>
@@ -144,24 +143,12 @@ export default {
 
   // 浏览器窗口大小变换
   resize: function () {
-    //   var self = this;
-    //   window.onresize = function () {
-    //     var eleDetect = document.getElementById("waterFallDetect"),
-    //       detectLeft = eleDetect && eleDetect.offsetLeft;
-    //     if (detectLeft && Math.abs(detectLeft - self.detectLeft) > 50) {
-    //       // 检测标签偏移异常，认为布局要改变
-    //       self.refresh();
-    //     }
-    //   };
-    let detectEle = document.getElementById("waterFallDetect")
-    if (!detectEle) return
     this.columnWidth = (this.container.clientWidth - this.gap * 3) / 2
     for (let i = 0; i < this.columnNumber; i++) {
       let columnEle = document.getElementById(`waterFallColumn_${i}`)
       if (!columnEle) continue
       columnEle.style.width = this.columnWidth + "px"
     }
-    detectEle.style.width = this.columnWidth + "px"
 
     return this
   },

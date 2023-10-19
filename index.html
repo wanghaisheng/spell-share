@@ -8,10 +8,7 @@
   </head>
   <body>
     <div id="bigSpinner" class="big-spinner">
-      <div class="loading">
-        <div class="loading-mask"></div>
-        <div class="loading-content"></div>
-      </div>
+        <span class="loader"></span>
     </div>
     <div id="container" class="container">
       <div class="flex alignCenter justifySpaceBetween header">
@@ -41,7 +38,7 @@
       <div class="prompt-list-before">A pirate standing on the deck</div>
       <!-- 横向可滚动列表 START -->
       <div class="prompt-list-container">
-        <ul class="prompt-list"></ul>
+        <div class="prompt-list"></div>
       </div>
       <!-- 横向可滚动列表 END -->
       <div class="waterFallBefore">Trending Now</div>
@@ -49,12 +46,8 @@
       <div id="waterFallContainer" class="waterFallContainer"></div>
       <!-- 瀑布流列表 END -->
 
-      <div id="smallSpinner" class="small-spinner">
-        <div class="loading">
-          <div class="loading-mask"></div>
-          <div class="loading-content"></div>
-        </div>
-      </div>
+      <!-- <div id="smallSpinner" class="small-spinner">
+      </div> -->
       <!-- VIEW MORE START-->
       <div id="viewMoreBtn" class="view-more-btn">View More</div>
       <!-- VIEW MORE END -->
@@ -71,8 +64,8 @@
     </div>
 
     <script src="models.js" type="module"></script>
-    <script src="water_fall.js" type="module"></script>
     <script src="api.js" type="module"></script>
+    <script src="water_fall.js" type="module"></script>
     <script src="index.js" type="module"></script>
   </body>
 </html>

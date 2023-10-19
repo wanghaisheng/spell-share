@@ -24,12 +24,9 @@ export default {
    * @returns {Promise<FeedListData>} 返回 FeedListData
    */
   queryFeedList: async function (pageNum, pageSize) {
-    let showNsfw = true
-    // let sessionId = "1857fe37-2b68-45d9-9ec3-bf9fb25dc7f6"
     try {
       const response = await fetch(
-        // `${this.baseUrl}spell/feed/query/v2?page_num=${pageNum}&page_size=${pageSize}&show_nsfw=${showNsfw}&session_id=${sessionId}`
-        `${this.baseUrl}spell/feed/query/v2?page_num=${pageNum}&page_size=${pageSize}&show_nsfw=${showNsfw}`,
+        `${this.baseUrl}spell/feed/query/v2?page_num=${pageNum}&page_size=${pageSize}`,
       )
       let data = await response.json()
       return FeedListData.fromJson(data)

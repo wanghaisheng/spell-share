@@ -39,7 +39,7 @@ class Main {
     // 设置用户名
     document.querySelector(".user-info span").innerHTML = feedInfo.userName
     // 设置点赞信息
-    document.querySelector(".like span").innerHTML = feedInfo.likes
+    document.querySelector(".like span").innerHTML = this.formatNumber(feedInfo.likes)
     // 设置 custom prompt
     document.querySelector(".prompt-list-before").innerHTML = feedInfo.customPrompt
     this.setModelList(feedInfo.models)
@@ -53,10 +53,14 @@ class Main {
       waterFall.resize()
     })
     document.querySelector("#createBtn").addEventListener("click", () => {
-      window.open(`https://app.adjust.com/15invrt2?deep_link=spellai://fusion/${this.feedId}`)
+      this.openUrl(this.feedId)
     })
     document.querySelector("#downloadBtn").addEventListener("click", () => {
-      window.open(`https://app.adjust.com/15invrt2?deep_link=spellai://fusion/${this.feedId}`)
+      this.openUrl(this.feedId)
+    })
+    // 监听 viewMore 按钮点击事件
+    document.querySelector("#viewMoreBtn").addEventListener("click", () => {
+      this.openUrl(this.feedId)
     })
   }
 
@@ -68,13 +72,31 @@ class Main {
     let listNode = document.querySelector(".prompt-list")
     let html = ""
     for (let model of modelList) {
-      html += `<li>
+      let temp = model.categoryColor.replace("#", "")
+      let convertColor = "#" + temp.substring(2) + temp.substring(0, 2)
+      let str = `<div class="model-item">
       <img src="./images/img-real.png" alt="" />
-      <div class="prompt-category" style="background-color: ${model.categoryColor};">${model.categoryName}</div>
+      <div class="prompt-category" style="background-color: ${convertColor};">${model.categoryName}</div>
       <div class="prompt-name">${model.modelName}</div>
-    </li>`
+    </div>`
+      html += str
     }
     listNode.innerHTML = html
+  }
+
+  /**
+   * 格式化数字，超过 1000 的将数字转换为 k 格式
+   * @param {number} num 数字
+   * @returns 字符串
+   */
+  formatNumber(num) {
+    if (num >= 1000) {
+      // 如果大于等于 1000，将数字转换为 k 格式
+      return (num / 1000).toFixed(1) + "k"
+    } else {
+      // 否则保持原始数字格式
+      return num.toString()
+    }
   }
 
   /**
@@ -93,5 +115,18 @@ class Main {
       element.style.width = "10rem"
     }
   }
+  /**
+   * 跳转链接
+   * @param {string} feedId - feedId
+   */
+  openUrl(feedId) {
+    let url = "https://app.adjust.com/15invrt2?deep_link=spellai:///fusion/" + feedId
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      url += "&deeplink_js=1"
+    }
+    console.log("ua", navigator.userAgent)
+    window.open(url)
+  }
 }
+
 new Main()

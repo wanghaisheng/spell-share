@@ -1,6 +1,15 @@
 html {
   font-size: 50px;
 }
+:root {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, segoe ui, Roboto, Helvetica, Arial, sans-serif;
+    --loader-color: #10fc76;
+}
+*,
+::after,
+::before {
+    font-family: inherit;
+}
 @media (min-width: 640px) {
   html {
     font-size: 60px;
@@ -72,7 +81,7 @@ body {
   align-items: center;
   position: relative;
 }
-.banner-container img {
+.banner-container > img {
   width: 100%;
   object-fit: cover;
 }
@@ -103,14 +112,11 @@ body {
 }
 
 /* 为列表项添加一些样式 */
-.prompt-list li {
+.prompt-list .model-item {
   display: inline-block; /* 使列表项横向排列 */
   margin-right: 10px; /* 为列表项之间添加一些间距 */
   width: 2rem;
   position: relative;
-}
-.prompt-list li:not(:first-child) {
-  margin-left: -0.26rem;
 }
 .prompt-category {
   position: absolute;
@@ -125,7 +131,7 @@ body {
   height: 0.45rem;
   line-height: 0.45rem;
 }
-.prompt-list li img {
+.prompt-list .model-item img {
   width: 100%;
   display: block;
 }
@@ -168,9 +174,13 @@ body {
 .waterFallContainer {
   max-width: 10.8rem;
   margin: 0 auto;
-  text-align: justify;
   padding: 0 15px;
   box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 15px;
 }
 .userAvatar {
   font-size: 0.3rem;
@@ -200,7 +210,7 @@ body {
 
 .create-btn {
   margin: 0 auto;
-  padding: 10px 0;
+  padding: 14px 0;
   background: linear-gradient(to right, #10fc76, #f6fc11);
   position: fixed;
   bottom: 20px;
@@ -242,142 +252,51 @@ body {
   color: #10fc76;
   font-size: 0.4rem;
   font-weight: 700;
+  margin-top: 0.5rem;
   margin-bottom: 2.4rem;
   text-align: center;
   line-height: 1.2rem;
 }
 
 /* 圆环loading START */
-.loading {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  position: relative;
-  overflow: hidden;
-  padding: 10px;
-}
-.loading .loading-content {
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  position: relative;
-  z-index: 9;
-  border-radius: 50%;
-}
-.loading .loading-mask {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  animation: rotateAnimate 2s linear infinite;
-  -moz-animation: rotateAnimate 2s linear infinite; /* Firefox */
-  -webkit-animation: rotateAnimate 2s linear infinite; /* Safari 和 Chrome */
-  -o-animation: rotateAnimate 2s linear infinite; /* Opera */
-}
-.loading .loading-mask::before {
-  content: "";
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: calc(50% - 5px);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #10fc76;
-}
-.loading .loading-mask::after {
-  content: "";
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 50%;
-  height: 60%;
-  background-image: linear-gradient(45deg, #10fc76, #000);
-}
-@keyframes rotateAnimate {
-  from {
-    transform: rotate(0);
-    -moz-transform: rotate(0);
-    -webkit-transform: rotate(0);
-    -o-transform: rotate(0);
+.loader {
+    font-size: 10px;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    position: relative;
+    text-indent: -9999em;
+    animation: mulShdSpin 1.1s infinite ease;
+    transform: translateZ(0);
   }
-  to {
-    transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
+  @keyframes mulShdSpin {
+    0%,
+    100% {
+      box-shadow: 0em -2.6em 0em 0em var(--loader-color), 1.8em -1.8em 0 0em rgba(16,252,118, 0.2), 2.5em 0em 0 0em rgba(16,252,118, 0.2), 1.75em 1.75em 0 0em rgba(16,252,118, 0.2), 0em 2.5em 0 0em rgba(16,252,118, 0.2), -1.8em 1.8em 0 0em rgba(16,252,118, 0.2), -2.6em 0em 0 0em rgba(16,252,118, 0.5), -1.8em -1.8em 0 0em rgba(16,252,118, 0.7);
+    }
+    12.5% {
+      box-shadow: 0em -2.6em 0em 0em rgba(16,252,118, 0.7), 1.8em -1.8em 0 0em var(--loader-color), 2.5em 0em 0 0em rgba(16,252,118, 0.2), 1.75em 1.75em 0 0em rgba(16,252,118, 0.2), 0em 2.5em 0 0em rgba(16,252,118, 0.2), -1.8em 1.8em 0 0em rgba(16,252,118, 0.2), -2.6em 0em 0 0em rgba(16,252,118, 0.2), -1.8em -1.8em 0 0em rgba(16,252,118, 0.5);
+    }
+    25% {
+      box-shadow: 0em -2.6em 0em 0em rgba(16,252,118, 0.5), 1.8em -1.8em 0 0em rgba(16,252,118, 0.7), 2.5em 0em 0 0em var(--loader-color), 1.75em 1.75em 0 0em rgba(16,252,118, 0.2), 0em 2.5em 0 0em rgba(16,252,118, 0.2), -1.8em 1.8em 0 0em rgba(16,252,118, 0.2), -2.6em 0em 0 0em rgba(16,252,118, 0.2), -1.8em -1.8em 0 0em rgba(16,252,118, 0.2);
+    }
+    37.5% {
+      box-shadow: 0em -2.6em 0em 0em rgba(16,252,118, 0.2), 1.8em -1.8em 0 0em rgba(16,252,118, 0.5), 2.5em 0em 0 0em rgba(16,252,118, 0.7), 1.75em 1.75em 0 0em var(--loader-color), 0em 2.5em 0 0em rgba(16,252,118, 0.2), -1.8em 1.8em 0 0em rgba(16,252,118, 0.2), -2.6em 0em 0 0em rgba(16,252,118, 0.2), -1.8em -1.8em 0 0em rgba(16,252,118, 0.2);
+    }
+    50% {
+      box-shadow: 0em -2.6em 0em 0em rgba(16,252,118, 0.2), 1.8em -1.8em 0 0em rgba(16,252,118, 0.2), 2.5em 0em 0 0em rgba(16,252,118, 0.5), 1.75em 1.75em 0 0em rgba(16,252,118, 0.7), 0em 2.5em 0 0em var(--loader-color), -1.8em 1.8em 0 0em rgba(16,252,118, 0.2), -2.6em 0em 0 0em rgba(16,252,118, 0.2), -1.8em -1.8em 0 0em rgba(16,252,118, 0.2);
+    }
+    62.5% {
+      box-shadow: 0em -2.6em 0em 0em rgba(16,252,118, 0.2), 1.8em -1.8em 0 0em rgba(16,252,118, 0.2), 2.5em 0em 0 0em rgba(16,252,118, 0.2), 1.75em 1.75em 0 0em rgba(16,252,118, 0.5), 0em 2.5em 0 0em rgba(16,252,118, 0.7), -1.8em 1.8em 0 0em var(--loader-color), -2.6em 0em 0 0em rgba(16,252,118, 0.2), -1.8em -1.8em 0 0em rgba(16,252,118, 0.2);
+    }
+    75% {
+      box-shadow: 0em -2.6em 0em 0em rgba(16,252,118, 0.2), 1.8em -1.8em 0 0em rgba(16,252,118, 0.2), 2.5em 0em 0 0em rgba(16,252,118, 0.2), 1.75em 1.75em 0 0em rgba(16,252,118, 0.2), 0em 2.5em 0 0em rgba(16,252,118, 0.5), -1.8em 1.8em 0 0em rgba(16,252,118, 0.7), -2.6em 0em 0 0em var(--loader-color), -1.8em -1.8em 0 0em rgba(16,252,118, 0.2);
+    }
+    87.5% {
+      box-shadow: 0em -2.6em 0em 0em rgba(16,252,118, 0.2), 1.8em -1.8em 0 0em rgba(16,252,118, 0.2), 2.5em 0em 0 0em rgba(16,252,118, 0.2), 1.75em 1.75em 0 0em rgba(16,252,118, 0.2), 0em 2.5em 0 0em rgba(16,252,118, 0.2), -1.8em 1.8em 0 0em rgba(16,252,118, 0.5), -2.6em 0em 0 0em rgba(16,252,118, 0.7), -1.8em -1.8em 0 0em var(--loader-color);
+    }
   }
-}
-
-@-moz-keyframes rotateAnimate /* Firefox */ {
-  from {
-    transform: rotate(0);
-    -moz-transform: rotate(0);
-    -webkit-transform: rotate(0);
-    -o-transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes rotateAnimate /* Safari 和 Chrome */ {
-  from {
-    transform: rotate(0);
-    -moz-transform: rotate(0);
-    -webkit-transform: rotate(0);
-    -o-transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-  }
-}
-
-@-o-keyframes rotateAnimate /* Opera */ {
-  from {
-    transform: rotate(0);
-    -moz-transform: rotate(0);
-    -webkit-transform: rotate(0);
-    -o-transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-  }
-}
 /* 圆环 loading END */
-
-/* 设置圆环的大小 START */
-.small-spinner {
-  width: 1rem;
-  height: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  visibility: hidden;
-}
-.small-spinner .loading {
-  /* 设置环的厚度 */
-  padding: 8px;
-}
-.small-spinner .loading .loading-mask::before {
-  /* 设置环的厚度 */
-  width: 8px;
-  height: 8px;
-}
-/* 设置圆环的大小 END */
 
 /* 大加载动画 START */
 .big-spinner {
@@ -386,34 +305,27 @@ body {
   align-items: center;
   height: 100vh;
 }
-.big-spinner .loading {
-    width: 3rem;
-  /* 设置环的厚度 */
-  padding: 12px;
-}
-.big-spinner .loading .loading-mask::before {
-  /* 设置环的厚度 */
-  width: 12px;
-  height: 12px;
-}
 /* 大加载动画 END */
 
 .bottom-info {
-    padding: 0 0.4rem;
-    position: absolute;
-    bottom: 0.3rem;
-    width: 100%;
-    box-sizing: border-box;
+  padding: 0 0.4rem;
+  position: absolute;
+  bottom: 0.3rem;
+  width: 100%;
+  box-sizing: border-box;
 }
-.user-info img {
-    width: 0.48rem;
+.user-info > img {
+  width: 0.48rem;
+  border-radius: 50%;
+  margin-right: 0.2rem;
 }
-.like, .user-info {
-    color: white;
-    font-size: 0.38rem;
-    font-weight: 700;
+.like,
+.user-info {
+  color: white;
+  font-size: 0.38rem;
+  font-weight: 700;
 }
-.like img{
-    width: 0.6rem;
-    margin-right: 0.07rem;
+.like img {
+  width: 0.6rem;
+  margin-right: 0.07rem;
 }

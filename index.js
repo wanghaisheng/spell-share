@@ -26,7 +26,7 @@ class Main {
     waterFall.create()
 
     // 初始设置元素宽度
-    this.setElementWidth(".create-btn")
+    this.setElementWidth(".create-btn", 0.95, 10)
     // 设置 banner 图片
     document.querySelector(".banner").setAttribute("src", feedInfo.hdBanner || feedInfo.banner)
     // 设置用户头像
@@ -49,14 +49,14 @@ class Main {
   initEventListener() {
     // 在窗口大小改变时调用函数来更新元素宽度
     window.addEventListener("resize", () => {
-      this.setElementWidth(".create-btn")
+      this.setElementWidth(".create-btn",0.95,10)
       waterFall.resize()
     })
     document.querySelector("#createBtn").addEventListener("click", () => {
       this.openUrl(this.feedId)
     })
     document.querySelector("#downloadBtn").addEventListener("click", () => {
-      this.openUrl(this.feedId)
+      window.open('https://app.adjust.com/15invrt2')
     })
     // 监听 viewMore 按钮点击事件
     document.querySelector("#viewMoreBtn").addEventListener("click", () => {
@@ -102,17 +102,19 @@ class Main {
   /**
    *  设置元素的宽度适配屏幕大小
    * @param {string} eleName - 元素的类名或者 ID
+   * @param {number} widthRatio - 屏幕宽度小于 10.8rem 时，元素宽度取屏幕宽度的百分比
+   * @param {number} width2 - 屏幕宽度大于 10.8rem 时，元素宽度取值
    */
-  setElementWidth(eleName) {
+  setElementWidth(eleName, widthRatio,width2) {
     const screenWidth = window.innerWidth
     const element = document.querySelector(eleName)
 
     if (screenWidth <= 10.8 * parseFloat(getComputedStyle(document.documentElement).fontSize)) {
       // 当屏幕宽度小于等于 10.8rem 时，设置元素宽度为屏幕宽度的0.95倍
-      element.style.width = screenWidth * 0.95 + "px"
+      element.style.width = screenWidth * widthRatio + "px"
     } else {
       // 当屏幕宽度大于 10.8rem 时，设置元素宽度为10rem
-      element.style.width = "10rem"
+      element.style.width = width2 +"rem"
     }
   }
   /**

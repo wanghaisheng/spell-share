@@ -63,14 +63,16 @@ export class ModelData {
    * @param {number} categorySort - 分类顺序
    * @param {string} modelCode - 模型编码
    * @param {string} modelName - 模型名称
+   * @param {string} imgUrl - 图片
    */
-  constructor(categoryCode, categoryColor, categoryName, categorySort, modelCode, modelName) {
+  constructor(categoryCode, categoryColor, categoryName, categorySort, modelCode, modelName, imgUrl) {
     this.categoryCode = categoryCode
     this.categoryColor = categoryColor
     this.categoryName = categoryName
     this.categorySort = categorySort
     this.modelCode = modelCode
     this.modelName = modelName
+    this.imgUrl = imgUrl
   }
   /**
    * 序列化
@@ -84,6 +86,7 @@ export class ModelData {
       json["category_sort"],
       json["model_code"],
       json["model_name"],
+      json['icon_urls'][0]
     )
   }
 }

@@ -75,7 +75,7 @@ class Main {
       let temp = model.categoryColor.replace("#", "")
       let convertColor = "#" + temp.substring(2) + temp.substring(0, 2)
       let str = `<div class="model-item">
-      <img src="./images/img-real.png" alt="" />
+      <img src="${model.imgUrl}" alt="" />
       <div class="prompt-category" style="background-color: ${convertColor};">${model.categoryName}</div>
       <div class="prompt-name">${model.modelName}</div>
     </div>`

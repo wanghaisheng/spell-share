@@ -142,6 +142,7 @@ body {
 .prompt-list .model-item img {
   width: 100%;
   display: block;
+  border-radius: 0.2rem;
 }
 .prompt-name {
   margin-top: 0.1rem;

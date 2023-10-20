@@ -1,0 +1,20 @@
+{
+  "name": "spellai-share",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "rollup -c --environment ENV:production",
+    "test": "rollup -c --environment ENV:development",
+    "serve": "rollup -w -c --environment ENV:development"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-html": "^1.0.3",
+    "@rollup/plugin-replace": "^5.0.4",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.1.4"
+  },
+  "dependencies": {}
+}

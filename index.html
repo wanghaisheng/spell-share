@@ -13,21 +13,17 @@
     <div id="container" class="container">
       <div class="flex alignCenter justifySpaceBetween header">
         <img src="./images/logo.png" alt="logo" class="logo" />
-        <div id="downloadBtn" class="downloadBtn flex alignCenter justifyCenter">
+        <a id="downloadBtn" class="downloadBtn flex alignCenter justifyCenter">
           <img src="./images/ic-download.png" alt="" />Download
-        </div>
+        </a>
       </div>
       <div class="headerHeight"></div>
 
       <div class="banner-container">
-        <!-- <div class="loading">
-          <div class="loading-mask"></div>
-          <div class="loading-content"></div>
-        </div> -->
-        <img class="banner" src="" alt="banner" />
+        <img class="banner" alt="banner" />
         <div class="bottom-info flex justifySpaceBetween alignCenter">
           <div class="user-info flex justifyCenter alignCenter">
-            <img src="" alt="" />
+            <img alt="" />
             <span></span>
           </div>
           <div class="like flex justifyCenter alignCenter">
@@ -47,20 +43,21 @@
       <div id="waterFallContainer" class="waterFallContainer"></div>
       <!-- 瀑布流列表 END -->
 
-      <!-- <div id="smallSpinner" class="small-spinner">
-      </div> -->
+      <div id="smallSpinner" class="small-spinner">
+        <span class="loader"></span>
+      </div>
       <!-- VIEW MORE START-->
-      <div id="viewMoreBtn" class="view-more-btn">View More</div>
+      <a id="viewMoreBtn" class="view-more-btn">View More</a>
       <!-- VIEW MORE END -->
 
       <!-- 创建按钮 START -->
-      <div id="createBtn" class="create-btn">
+      <a id="createBtn" class="create-btn">
         <div class="create-btn-text">
           <div>Create Your Art</div>
           <div>TOTALLY FREE</div>
         </div>
         <img src="./images/arrow.png" alt="" />
-      </div>
+      </a>
       <!-- 创建按钮 END -->
     </div>
 

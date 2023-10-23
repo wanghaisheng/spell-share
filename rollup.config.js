@@ -3,9 +3,9 @@ import replace from '@rollup/plugin-replace';
 import terser from '@rollup/plugin-terser';
 
 export default {
-  input: "./src/scripts/index.js",
+  input: "index.js",
   output: {
-    file: "./dist/index.js",
+    file: "dist/index.js",
     format: "esm",
   },
   plugins: [

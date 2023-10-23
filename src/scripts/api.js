@@ -1,7 +1,7 @@
 import { FeedListData, FeedInfo } from "./models.js"
 
 export default {
-  baseUrl: __env__ === "production" ? 'https://sp.aimirror.fun/' : "https://sptv2.aimirror.fun/", //'https://sp.aimirror.fun/',
+  baseUrl: __env__ === "production" ? 'https://sp.aimirror.fun/' : "https://sptv2.aimirror.fun/",
   /**
    * 请求 Feed 详情
    * @param {string} feedId

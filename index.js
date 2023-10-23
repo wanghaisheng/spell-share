@@ -1,6 +1,6 @@
-import { ModelData } from "./models.js"
-import waterFall from "./water_fall.js"
-import api from "./api.js"
+import { ModelData } from "./src/scripts/models.js"
+import waterFall from "./src/scripts/water_fall.js"
+import api from "./src/scripts/api.js"
 
 class Main {
   constructor() {
@@ -14,7 +14,7 @@ class Main {
     const searchParams = url.searchParams
 
     // 获取参数值
-    this.feedId = searchParams.get("feedId")
+    this.feedId = searchParams.get("id")
     console.log("feedId", this.feedId)
 
     // 拉取服务器数据
@@ -52,16 +52,11 @@ class Main {
       this.setElementWidth(".create-btn",0.95,10)
       waterFall.resize()
     })
-    document.querySelector("#createBtn").addEventListener("click", () => {
-      this.openUrl(this.feedId)
-    })
-    document.querySelector("#downloadBtn").addEventListener("click", () => {
-      window.open('https://app.adjust.com/15invrt2')
-    })
-    // 监听 viewMore 按钮点击事件
-    document.querySelector("#viewMoreBtn").addEventListener("click", () => {
-      this.openUrl(this.feedId)
-    })
+    let suffix = encodeURIComponent(`spellai:///fusion/${this.feedId}`)
+    let url = `https://8p5j.adj.st/fusion/${this.feedId}?adjust_t=15invrt2&adjust_deeplink=${suffix}`
+    document.querySelector("#createBtn").setAttribute('href',url)
+    document.querySelector("#downloadBtn").setAttribute('href',`https://8p5j.adj.st?adjust_t=15invrt2`)
+    document.querySelector("#viewMoreBtn").setAttribute('href',url)
   }
 
   /**
@@ -116,18 +111,6 @@ class Main {
       // 当屏幕宽度大于 10.8rem 时，设置元素宽度为10rem
       element.style.width = width2 +"rem"
     }
-  }
-  /**
-   * 跳转链接
-   * @param {string} feedId - feedId
-   */
-  openUrl(feedId) {
-    let url = "https://app.adjust.com/15invrt2?deep_link=spellai:///fusion/" + feedId
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      url += "&deeplink_js=1"
-    }
-    console.log("ua", navigator.userAgent)
-    window.open(url)
   }
 }
 

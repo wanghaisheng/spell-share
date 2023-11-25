@@ -1,6 +1,7 @@
 import { ModelData } from "./src/scripts/models.js"
 import waterFall from "./src/scripts/water_fall.js"
 import api from "./src/scripts/api.js"
+import "./index.css"
 
 class Main {
   constructor() {
